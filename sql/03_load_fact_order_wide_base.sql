@@ -1,0 +1,336 @@
+USE bench_columnar_perf;
+
+-- Base dataset:
+--   10 days
+--   500,000 rows per day
+--   about 5,000,000 rows total
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 0 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    200000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-01 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 1 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    1000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    201000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-02 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 2 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    2000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    202000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-03 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 3 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    3000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    203000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-04 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 4 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    4000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    204000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-05 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 5 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    5000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    205000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-06 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 6 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    6000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    206000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-07 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 7 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    7000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    207000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-08 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 8 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    8000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    208000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-09 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
+
+INSERT IGNORE INTO fact_order_wide
+SELECT
+    1 + (seq % 200) AS merchant_id,
+    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 9 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    9000000 + seq AS order_id,
+    1000000 + (seq % 5000000) AS user_id,
+    209000000 + seq AS round_id,
+    10001 + (seq % 5000) AS ad_id,
+    1 + (seq % 200) AS game_id,
+    1 + (seq % 20) AS platform_id,
+    ELT(1 + seq % 3, 'USD', 'CNY', 'EUR') AS currency,
+    1 + (seq % 3) AS status,
+    0 AS deleted,
+    CAST((seq % 100000) / 100.0 AS DECIMAL(18, 2)) AS amount,
+    CAST((seq % 80000) / 100.0 AS DECIMAL(18, 2)) AS valid_amount,
+    CAST((seq % 70000) / 100.0 AS DECIMAL(18, 2)) AS payout,
+    CAST((seq % 20000) / 100.0 AS DECIMAL(18, 2)) AS revenue,
+    CAST((seq % 5000) / 100.0 AS DECIMAL(18, 2)) AS jackpot_prize,
+    JSON_OBJECT('first', CAST((seq % 1000) / 100.0 AS DECIMAL(10, 2))) AS insurance_turn,
+    JSON_OBJECT('second', CAST((seq % 800) / 100.0 AS DECIMAL(10, 2))) AS insurance_river,
+    ELT(1 + seq % 5, 'US', 'CN', 'SG', 'DE', 'JP') AS country,
+    ELT(1 + seq % 4, 'app', 'web', 'agent', 'api') AS channel,
+    CONCAT('m-', LPAD(seq % 100, 2, '0')) AS device_model,
+    CONCAT('user-', LPAD(seq % 5000000, 7, '0')) AS login_name,
+    RPAD(CONCAT('p1-', seq % 1000), 64, 'x') AS payload_1,
+    RPAD(CONCAT('p2-', seq % 2000), 64, 'y') AS payload_2,
+    RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
+    RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
+    RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
+    TIMESTAMP('2026-03-10 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+FROM bench_seq_1m
+WHERE seq < 500000;
