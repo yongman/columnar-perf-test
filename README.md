@@ -47,7 +47,11 @@ target/columnar-perf-test/
 │   ├── 05_row_number_paging.sql
 │   ├── 06_hot_window_agg.sql
 │   ├── 07_hot_window_topn.sql
-│   └── 08_or_lookup.sql
+│   ├── 08_or_lookup.sql
+│   ├── 09_pushdown_filter_base.sql
+│   ├── 10_pushdown_filter_derived.sql
+│   ├── 11_late_materialization_narrow_topn.sql
+│   └── 12_late_materialization_wide_topn.sql
 ├── results/
 ├── scripts/
 │   ├── collect_tiflash_dt_stats.sh
@@ -88,6 +92,8 @@ The chosen column mix follows the online patterns extracted from
 - `order by ... limit`
 - `row_number()`
 - JSON extraction in aggregations
+- base-column filters versus derived-filter variants
+- narrow `TopN` versus wide projection `TopN`
 
 ## Default Small-Scale Data
 
@@ -324,6 +330,12 @@ Recommended primary metrics:
 - `06` / `07`: hot-window stress, useful for checking sensitivity to active
   delta rows
 - `08`: OR lookup style boundary case, useful as a non-ideal but real pattern
+- `09` / `10`: filter-pushdown sensitivity pair; `09` keeps predicates on base
+  columns while `10` routes the same logical checks through derived flags so
+  `EXPLAIN ANALYZE` can show how much filtering stays near the scan
+- `11` / `12`: explicit late-materialization pair; both run the same `TopN`
+  shape, but `11` keeps the projection narrow while `12` pulls wide payload
+  columns to make materialization cost easy to compare
 
 ## Data Preparation Capacity
 
