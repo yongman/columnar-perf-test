@@ -1,0 +1,9 @@
+label=large-smoke
+mysql_host=127.0.0.1
+mysql_port=4000
+mysql_user=root
+bench_db=bench_columnar_perf_large_smoke
+warmup=0
+repeat=1
+started_at=2026-04-27T08:55:50Z
+finished_at=2026-04-27T08:56:09Z

@@ -13,6 +13,8 @@ MYSQL_DEFAULT_DB="${MYSQL_DEFAULT_DB:-}"
 RUN_LABEL="${RUN_LABEL:-}"
 WARMUP="${WARMUP:-1}"
 REPEAT="${REPEAT:-5}"
+TIME_BIN="${TIME_BIN:-${ROOT_DIR}/bin/time}"
+CREATE_CHUNK_PROCS="${CREATE_CHUNK_PROCS:-auto}"
 
 mysql_base_args=(
   --host="${MYSQL_HOST}"
@@ -35,6 +37,59 @@ mysql_table_args=(
   "${mysql_base_args[@]}"
   --table
 )
+
+render_sql_file() {
+  local file="$1"
+  sed "s/bench_columnar_perf/${BENCH_DB}/g" "${file}"
+}
+
+supports_chunk_procedures() {
+  case "${CREATE_CHUNK_PROCS}" in
+    1|true|TRUE|yes|YES)
+      return 0
+      ;;
+    0|false|FALSE|no|NO)
+      return 1
+      ;;
+    auto)
+      ;;
+    *)
+      echo "unknown CREATE_CHUNK_PROCS setting: ${CREATE_CHUNK_PROCS}" >&2
+      exit 1
+      ;;
+  esac
+
+  local probe_file
+  probe_file="$(mktemp)"
+  cat >"${probe_file}" <<EOF
+CREATE DATABASE IF NOT EXISTS ${BENCH_DB};
+USE ${BENCH_DB};
+DROP PROCEDURE IF EXISTS __bench_proc_probe;
+DELIMITER //
+CREATE PROCEDURE __bench_proc_probe()
+BEGIN
+  SELECT 1;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS __bench_proc_probe;
+EOF
+
+  if mysql "${mysql_base_args[@]}" < "${probe_file}" >/dev/null 2>&1; then
+    rm -f "${probe_file}"
+    return 0
+  fi
+
+  rm -f "${probe_file}"
+  return 1
+}
+
+maybe_create_chunk_load_procedures() {
+  if supports_chunk_procedures; then
+    run_sql_file "${SQL_DIR}/10_create_chunk_load_procedures.sql"
+  else
+    echo "==> skipping ${SQL_DIR}/10_create_chunk_load_procedures.sql (stored procedures unsupported)"
+  fi
+}
 
 usage() {
   cat <<'EOF'
@@ -69,12 +124,12 @@ require_cmd() {
 run_sql_file() {
   local file="$1"
   echo "==> running ${file}"
-  mysql "${mysql_base_args[@]}" < "${file}"
+  render_sql_file "${file}" | mysql "${mysql_base_args[@]}"
 }
 
 load_query() {
   local file="$1"
-  sed -e '/^[[:space:]]*--/d' -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' "${file}" | tr '\n' ' '
+  render_sql_file "${file}" | sed -e '/^[[:space:]]*--/d' -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' | tr '\n' ' '
 }
 
 write_wrapped_sql() {
@@ -172,7 +227,7 @@ benchmark_run() {
 
     for ((i = 1; i <= REPEAT; i++)); do
       echo "  measure ${i}/${REPEAT}"
-      /usr/bin/time -o "${time_file}" -f '%e' mysql "${mysql_batch_args[@]}" < "${sql_file}" >/dev/null
+      "${TIME_BIN}" -o "${time_file}" -f '%e' mysql "${mysql_batch_args[@]}" < "${sql_file}" >/dev/null
       printf "%s\t%s\t%d\t%s\n" "${RUN_LABEL}" "${query_name}" "${i}" "$(cat "${time_file}")" >>"${timings_file}"
     done
 
@@ -186,7 +241,7 @@ benchmark_run() {
 main() {
   require_cmd mysql
   require_cmd sha256sum
-  require_cmd /usr/bin/time
+  require_cmd "${TIME_BIN}"
 
   local cmd="${1:-}"
   case "${cmd}" in
@@ -194,13 +249,13 @@ main() {
       run_sql_file "${SQL_DIR}/00_create_database.sql"
       run_sql_file "${SQL_DIR}/01_create_tables.sql"
       run_sql_file "${SQL_DIR}/02_build_helper_sequences.sql"
-      run_sql_file "${SQL_DIR}/10_create_chunk_load_procedures.sql"
+      maybe_create_chunk_load_procedures
       ;;
     bootstrap)
       run_sql_file "${SQL_DIR}/00_create_database.sql"
       run_sql_file "${SQL_DIR}/01_create_tables.sql"
       run_sql_file "${SQL_DIR}/02_build_helper_sequences.sql"
-      run_sql_file "${SQL_DIR}/10_create_chunk_load_procedures.sql"
+      maybe_create_chunk_load_procedures
       run_sql_file "${SQL_DIR}/03_load_fact_order_wide_base.sql"
       run_sql_file "${SQL_DIR}/04_load_user_game_day_base.sql"
       ;;

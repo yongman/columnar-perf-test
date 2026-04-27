@@ -5,7 +5,7 @@ USE bench_columnar_perf;
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-09 00:00:00') + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(TIMESTAMP('2026-03-09 00:00:00'), INTERVAL (seq % 86400) SECOND) AS stat_time,
     100000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     300000000 + seq AS round_id,
@@ -31,7 +31,7 @@ SELECT
     RPAD(CONCAT('ap3-', seq % 3000), 64, 'c') AS payload_3,
     RPAD(CONCAT('ap4-', seq % 4000), 64, 'd') AS payload_4,
     RPAD(CONCAT('ap5-', seq % 5000), 64, 'e') AS payload_5,
-    TIMESTAMP('2026-03-09 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-09 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq >= 500000
   AND seq < 750000;
@@ -39,7 +39,7 @@ WHERE seq >= 500000
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-10 00:00:00') + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(TIMESTAMP('2026-03-10 00:00:00'), INTERVAL (seq % 86400) SECOND) AS stat_time,
     101000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     301000000 + seq AS round_id,
@@ -65,7 +65,7 @@ SELECT
     RPAD(CONCAT('ap3-', seq % 3000), 64, 'c') AS payload_3,
     RPAD(CONCAT('ap4-', seq % 4000), 64, 'd') AS payload_4,
     RPAD(CONCAT('ap5-', seq % 5000), 64, 'e') AS payload_5,
-    TIMESTAMP('2026-03-10 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-10 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq >= 500000
   AND seq < 750000;

@@ -1,0 +1,38 @@
+==> load mode: direct
+==> running /workspace/columnar-perf-test/sql/00_create_database.sql
+==> running /workspace/columnar-perf-test/sql/01_create_tables.sql
+==> running /workspace/columnar-perf-test/sql/02_build_helper_sequences.sql
+==> loading fact_order_wide
+    total_rows=20000000
+    day_count=10
+    rows_per_day=2000000
+    chunk_rows=1000000
+    chunk_count_per_day=2
+  -> day 0/10
+  -> day 1/10
+  -> day 2/10
+  -> day 3/10
+  -> day 4/10
+  -> day 5/10
+  -> day 6/10
+  -> day 7/10
+  -> day 8/10
+  -> day 9/10
+==> loading user_game_day
+    total_rows=10000000
+    day_count=10
+    rows_per_day=1000000
+    chunk_rows=1000000
+    chunk_count_per_day=1
+  -> day 0/10
+  -> day 1/10
+  -> day 2/10
+  -> day 3/10
+  -> day 4/10
+  -> day 5/10
+  -> day 6/10
+  -> day 7/10
+  -> day 8/10
+  -> day 9/10
+==> running /workspace/columnar-perf-test/sql/11_seed_or_lookup_rows.sql
+==> large dataset load completed

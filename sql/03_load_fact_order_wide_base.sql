@@ -8,7 +8,7 @@ USE bench_columnar_perf;
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 0 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 0 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     200000000 + seq AS round_id,
@@ -34,14 +34,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-01 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-01 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 1 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 1 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     1000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     201000000 + seq AS round_id,
@@ -67,14 +67,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-02 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-02 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 2 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 2 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     2000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     202000000 + seq AS round_id,
@@ -100,14 +100,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-03 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-03 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 3 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 3 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     3000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     203000000 + seq AS round_id,
@@ -133,14 +133,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-04 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-04 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 4 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 4 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     4000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     204000000 + seq AS round_id,
@@ -166,14 +166,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-05 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-05 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 5 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 5 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     5000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     205000000 + seq AS round_id,
@@ -199,14 +199,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-06 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-06 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 6 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 6 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     6000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     206000000 + seq AS round_id,
@@ -232,14 +232,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-07 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-07 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 7 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 7 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     7000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     207000000 + seq AS round_id,
@@ -265,14 +265,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-08 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-08 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 8 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 8 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     8000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     208000000 + seq AS round_id,
@@ -298,14 +298,14 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-09 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-09 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;
 
 INSERT IGNORE INTO fact_order_wide
 SELECT
     1 + (seq % 200) AS merchant_id,
-    TIMESTAMP('2026-03-01 00:00:00') + INTERVAL 9 DAY + INTERVAL (seq % 86400) SECOND AS stat_time,
+    DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL 9 DAY), INTERVAL (seq % 86400) SECOND) AS stat_time,
     9000000 + seq AS order_id,
     1000000 + (seq % 5000000) AS user_id,
     209000000 + seq AS round_id,
@@ -331,6 +331,6 @@ SELECT
     RPAD(CONCAT('p3-', seq % 3000), 64, 'z') AS payload_3,
     RPAD(CONCAT('p4-', seq % 4000), 64, 'k') AS payload_4,
     RPAD(CONCAT('p5-', seq % 5000), 64, 'm') AS payload_5,
-    TIMESTAMP('2026-03-10 00:01:00') + INTERVAL (seq % 86400) SECOND AS updated_at
+    DATE_ADD(TIMESTAMP('2026-03-10 00:01:00'), INTERVAL (seq % 86400) SECOND) AS updated_at
 FROM bench_seq_1m
 WHERE seq < 500000;

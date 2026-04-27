@@ -14,7 +14,7 @@ BEGIN
     INSERT IGNORE INTO fact_order_wide
     SELECT
         1 + ((p_base_order_id + seq) % 200) AS merchant_id,
-        TIMESTAMP('2026-03-01 00:00:00') + INTERVAL p_day_offset DAY + INTERVAL ((p_base_order_id + seq) % 86400) SECOND AS stat_time,
+        DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:00:00'), INTERVAL p_day_offset DAY), INTERVAL ((p_base_order_id + seq) % 86400) SECOND) AS stat_time,
         p_base_order_id + seq AS order_id,
         1000000 + ((p_base_order_id + seq) % 500000000) AS user_id,
         200000000 + p_base_order_id + seq AS round_id,
@@ -40,7 +40,7 @@ BEGIN
         RPAD(CONCAT('p3-', (p_base_order_id + seq) % 3000), 64, 'z') AS payload_3,
         RPAD(CONCAT('p4-', (p_base_order_id + seq) % 4000), 64, 'k') AS payload_4,
         RPAD(CONCAT('p5-', (p_base_order_id + seq) % 5000), 64, 'm') AS payload_5,
-        TIMESTAMP('2026-03-01 00:01:00') + INTERVAL p_day_offset DAY + INTERVAL ((p_base_order_id + seq) % 86400) SECOND AS updated_at
+        DATE_ADD(DATE_ADD(TIMESTAMP('2026-03-01 00:01:00'), INTERVAL p_day_offset DAY), INTERVAL ((p_base_order_id + seq) % 86400) SECOND) AS updated_at
     FROM bench_seq_1m
     WHERE seq < p_rows_in_chunk;
 END //
