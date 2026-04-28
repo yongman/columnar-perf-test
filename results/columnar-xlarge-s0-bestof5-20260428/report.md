@@ -8,7 +8,7 @@
 - Dataset size: `fact_order_wide=200,000,000`, `user_game_day=100,000,006`
 - Runner config: `WARMUP=0`, `REPEAT=5`
 - Reporting rule: each query is executed `5` times and the final reported result is the fastest single execution (`Min`)
-- This report is based on the full rerun after tuning on 2026-04-28, with `08_or_lookup` refreshed by a same-day spot rerun at `2026-04-28T08:18:47Z` and `09_pushdown_filter_base` / `10_pushdown_filter_derived` refreshed again at `2026-04-28T08:37:29Z`
+- This report is based on the full rerun after tuning on 2026-04-28, with `08_or_lookup` refreshed by a same-day spot rerun at `2026-04-28T08:18:47Z`, `09_pushdown_filter_base` / `10_pushdown_filter_derived` refreshed again at `2026-04-28T08:37:29Z`, and `04_wide_topn` refreshed again at `2026-04-28T09:00:06Z`
 - TiFlash path verification: `12/12` `EXPLAIN ANALYZE` outputs contain `mpp[tiflash]`
 
 ## Validation
@@ -26,14 +26,14 @@
 
 ## Key Observation
 - Under the current tuned xlarge setup, the columnar path is materially healthier than before. `11/12` queries now complete within `2` seconds on best-of-5 latency.
-- The main remaining heavy case is `12_late_materialization_wide_topn`; `08_or_lookup` and `09_pushdown_filter_base` are now below `1s`, and `10_pushdown_filter_derived` is close to that band at `1.016s`.
+- The main remaining heavy case is `12_late_materialization_wide_topn`; `08_or_lookup` and `09_pushdown_filter_base` are now below `1s`, while `04_wide_topn` and `10_pushdown_filter_derived` are both around the `1s` band.
 
 | Query | Best-of-5 (s) | Median (s) | P95 (s) | Min (s) | Max (s) | Result Rows | SHA-256 Prefix |
 |---|---:|---:|---:|---:|---:|---:|---|
 | `01_scan_agg_distinct` | 0.637 | 0.657 | 0.678 | 0.637 | 0.678 | 1 | `a688a8419836` |
 | `02_scan_agg_json` | 0.867 | 0.918 | 0.968 | 0.867 | 0.968 | 1 | `980d3620f968` |
 | `03_large_in_group_by` | 1.475 | 1.736 | 1.902 | 1.475 | 1.902 | 32 | `5c3c58746630` |
-| `04_wide_topn` | 1.306 | 1.322 | 1.476 | 1.306 | 1.476 | 100 | `ca6fc562fe82` |
+| `04_wide_topn` | 1.016 | 1.072 | 1.176 | 1.016 | 1.176 | 100 | `ca6fc562fe82` |
 | `05_row_number_paging` | 0.747 | 0.828 | 0.867 | 0.747 | 0.867 | 1000 | `c85714624fa0` |
 | `06_hot_window_agg` | 0.461 | 0.508 | 0.621 | 0.461 | 0.621 | 1 | `b61d8a4d80d6` |
 | `07_hot_window_topn` | 0.876 | 1.284 | 1.356 | 0.876 | 1.356 | 100 | `e4b04b330fad` |

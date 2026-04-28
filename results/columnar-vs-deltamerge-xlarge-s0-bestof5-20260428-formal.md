@@ -7,7 +7,7 @@
 - Shared benchmark schema: `bench_columnar_perf_xlarge`
 - Shared dataset size: `fact_order_wide=200,000,000`, `user_game_day=100,000,006`
 - Methodology: both runs use `WARMUP=0`, `REPEAT=5`, and report the fastest single execution (`Min`)
-- This report compares the latest official DeltaMerge run against the current official columnar run, where `08_or_lookup` was refreshed by a same-day spot rerun at `2026-04-28T08:18:47Z` and `09_pushdown_filter_base` / `10_pushdown_filter_derived` were refreshed again at `2026-04-28T08:37:29Z`
+- This report compares the latest official DeltaMerge run against the current official columnar run, where `08_or_lookup` was refreshed by a same-day spot rerun at `2026-04-28T08:18:47Z`, `09_pushdown_filter_base` / `10_pushdown_filter_derived` were refreshed again at `2026-04-28T08:37:29Z`, and `04_wide_topn` was refreshed again at `2026-04-28T09:00:06Z`
 - TiFlash path verification: both runs have `12/12` `EXPLAIN ANALYZE` outputs containing `mpp[tiflash]`
 - Correctness: `12/12` result hashes matched between the two runs
 - Logical plan consistency: `12/12` query plan skeletons are identical between the two runs
@@ -15,7 +15,7 @@
 ## Executive Summary
 - On xlarge under the current best-of-5 methodology, DeltaMerge is faster on `10/12` queries, while columnar is faster on `01_scan_agg_distinct` and `03_large_in_group_by`.
 - The underlying full-sweep wall time is `144s` for columnar versus `62s` for DeltaMerge, so the overall gap is `2.32x`.
-- On best-of-5 latency, the query-level columnar/DeltaMerge ratio ranges from `0.66x` to `4.22x`, with arithmetic average `2.40x` and median `2.28x`.
+- On best-of-5 latency, the query-level columnar/DeltaMerge ratio ranges from `0.66x` to `4.22x`, with arithmetic average `2.35x` and median `1.98x`.
 - The largest DeltaMerge advantage is now `08_or_lookup` at `4.22x`. The largest columnar advantage is `03_large_in_group_by`, where columnar is `1.52x` faster.
 
 ## Timing Summary
@@ -24,7 +24,7 @@
 | `01_scan_agg_distinct` | yes | 0.637 | 0.655 | 0.97x | 0.678 | 0.708 |
 | `02_scan_agg_json` | yes | 0.867 | 0.599 | 1.45x | 0.968 | 0.708 |
 | `03_large_in_group_by` | yes | 1.475 | 2.244 | 0.66x | 1.902 | 2.720 |
-| `04_wide_topn` | yes | 1.306 | 0.482 | 2.71x | 1.476 | 0.639 |
+| `04_wide_topn` | yes | 1.016 | 0.482 | 2.11x | 1.176 | 0.639 |
 | `05_row_number_paging` | yes | 0.747 | 0.402 | 1.86x | 0.867 | 0.496 |
 | `06_hot_window_agg` | yes | 0.461 | 0.262 | 1.76x | 0.621 | 0.288 |
 | `07_hot_window_topn` | yes | 0.876 | 0.494 | 1.77x | 1.356 | 0.562 |
@@ -44,7 +44,7 @@
 | `01_scan_agg_distinct` | `TableReader` | 579.1 | 624.1 | `TableRangeScan` | 288.0 | 396.8 | 1 | 16 |
 | `02_scan_agg_json` | `TableReader` | 743.9 | 502.8 | `TableRangeScan` | 314.6 | 352.8 | 1 | 16 |
 | `03_large_in_group_by` | `Sort` | 1860.0 | 2310.0 | `TableFullScan` | 1690.0 | 2260.0 | 10 | 16 |
-| `04_wide_topn` | `Projection` | 1230.0 | 1010.0 | `TableRangeScan` | 1170.0 | 950.8 | 1 | 1 |
+| `04_wide_topn` | `Projection` | 946.2 | 1010.0 | `TableRangeScan` | 875.1 | 950.8 | 1 | 1 |
 | `05_row_number_paging` | `TableReader` | 685.6 | 303.9 | `TableRangeScan` | 501.1 | 213.1 | 1 | 16 |
 | `06_hot_window_agg` | `TableReader` | 390.8 | 205.6 | `TableRangeScan` | 214.8 | 147.5 | 1 | 16 |
 | `07_hot_window_topn` | `Projection` | 775.9 | 436.1 | `TableRangeScan` | 718.1 | 429.0 | 1 | 16 |
@@ -57,14 +57,14 @@
 ## Observations By Query Group
 - `01/02/05/06` scan-and-aggregate group: the tuned columnar path is much closer to DeltaMerge than before. `01_scan_agg_distinct` is now slightly faster on columnar, while `02/05/06` still leave DeltaMerge with about `1.45x` to `1.86x` advantage.
 - `03_large_in_group_by`: this remains the clearest columnar win. Columnar best-of-5 is `1.475s` versus `2.244s` on DeltaMerge, and explain shows lower root and scan time even though DeltaMerge still uses more scan threads (`16` vs `10`).
-- `04/07` TopN group: tuning helped columnar materially, but DeltaMerge still leads. The current gap is `2.71x` on `04` and `1.77x` on `07`.
+- `04/07` TopN group: tuning and the same-day spot retry helped columnar materially on `04_wide_topn`, which is now down to `1.016s`. DeltaMerge still leads, but the gap on `04` narrowed to `2.11x`, while `07` stays at `1.77x`.
 - `08_or_lookup`: the same-day spot retry materially improved columnar to `0.963s`, but DeltaMerge remains at `0.228s`, so the gap is still `4.22x`. This still points to sparse-read efficiency as a major differentiator.
 - `09/10` pushdown-filter pair: the same-day spot retry materially improved columnar here as well. `09_pushdown_filter_base` moved to `0.941s` and `10_pushdown_filter_derived` to `1.016s`, but DeltaMerge still remains about `3.11x` to `3.29x` faster. The columnar leaf scan is now down to about `848ms` to `929ms`.
 - `11/12` late materialization pair: the tuned columnar path narrowed these gaps significantly, but DeltaMerge still keeps a clear edge. The wide-row case `12` is still `4.20x` slower on columnar.
 
 ## Conclusion
 - Under the current tuned xlarge setup and best-of-5 methodology, DeltaMerge still performs better overall, but the gap is substantially narrower than before.
-- Columnar now wins `01_scan_agg_distinct` and `03_large_in_group_by`, and the largest remaining gaps are now `08_or_lookup` and `12`, with `09/10` reduced into the `3.1x` to `3.3x` band.
+- Columnar now wins `01_scan_agg_distinct` and `03_large_in_group_by`, and the largest remaining gaps are now `08_or_lookup` and `12`, with `09/10` reduced into the `3.1x` to `3.3x` band and `04` down to `2.11x`.
 - The remaining differences are still best explained by physical execution behavior under the same logical plans: leaf-scan cost, sparse-read efficiency, and scan-side concurrency.
 
 ## Artifacts

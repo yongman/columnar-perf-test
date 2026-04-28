@@ -14,11 +14,11 @@ columnar-xlarge-s0-bestof5-20260428	03_large_in_group_by	2	1.547
 columnar-xlarge-s0-bestof5-20260428	03_large_in_group_by	3	1.736
 columnar-xlarge-s0-bestof5-20260428	03_large_in_group_by	4	1.475
 columnar-xlarge-s0-bestof5-20260428	03_large_in_group_by	5	1.843
-columnar-xlarge-s0-bestof5-20260428	04_wide_topn	1	1.336
-columnar-xlarge-s0-bestof5-20260428	04_wide_topn	2	1.314
-columnar-xlarge-s0-bestof5-20260428	04_wide_topn	3	1.306
-columnar-xlarge-s0-bestof5-20260428	04_wide_topn	4	1.322
-columnar-xlarge-s0-bestof5-20260428	04_wide_topn	5	1.476
+columnar-xlarge-s0-bestof5-20260428	04_wide_topn	1	1.089
+columnar-xlarge-s0-bestof5-20260428	04_wide_topn	2	1.072
+columnar-xlarge-s0-bestof5-20260428	04_wide_topn	3	1.176
+columnar-xlarge-s0-bestof5-20260428	04_wide_topn	4	1.061
+columnar-xlarge-s0-bestof5-20260428	04_wide_topn	5	1.016
 columnar-xlarge-s0-bestof5-20260428	05_row_number_paging	1	0.867
 columnar-xlarge-s0-bestof5-20260428	05_row_number_paging	2	0.849
 columnar-xlarge-s0-bestof5-20260428	05_row_number_paging	3	0.747
