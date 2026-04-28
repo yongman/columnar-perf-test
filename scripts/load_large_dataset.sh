@@ -24,6 +24,7 @@ LOAD_USER="${LOAD_USER:-1}"
 RUN_ANALYZE_AFTER_LOAD="${RUN_ANALYZE_AFTER_LOAD:-1}"
 SEED_LOOKUP_ROWS="${SEED_LOOKUP_ROWS:-1}"
 LOAD_MODE="${LOAD_MODE:-auto}"
+PRE_SPLIT_REGIONS="${PRE_SPLIT_REGIONS:-0}"
 
 mysql_base_args=(
   --host="${MYSQL_HOST}"
@@ -227,6 +228,24 @@ WHERE seq < ${chunk_rows};
 EOF
 }
 
+split_target_tables() {
+  if (( PRE_SPLIT_REGIONS <= 1 )); then
+    return
+  fi
+
+  local fact_upper_order_id=$(( FACT_TARGET_ROWS + 1 ))
+  local user_upper_user_id=$(( 1000000 + USER_TARGET_ROWS + 1 ))
+
+  echo "==> pre-splitting target tables"
+  echo "    regions=${PRE_SPLIT_REGIONS}"
+
+  mysql "${mysql_base_args[@]}" <<EOF
+USE ${BENCH_DB};
+SPLIT TABLE fact_order_wide BETWEEN (1, '2026-03-01 00:00:00', 0) AND (201, '2026-03-11 00:00:00', ${fact_upper_order_id}) REGIONS ${PRE_SPLIT_REGIONS};
+SPLIT TABLE user_game_day BETWEEN ('2026-03-01', 1000000, 1, 1) AND ('2026-03-11', ${user_upper_user_id}, 101, 201) REGIONS ${PRE_SPLIT_REGIONS};
+EOF
+}
+
 load_table_by_days() {
   local table_name="$1"
   local proc_name="$2"
@@ -313,6 +332,7 @@ main() {
   if [[ "${actual_load_mode}" == "procedure" ]]; then
     run_sql_file "${SQL_DIR}/10_create_chunk_load_procedures.sql"
   fi
+  split_target_tables
 
   if [[ "${LOAD_FACT}" == "1" ]]; then
     load_table_by_days "fact_order_wide" "load_fact_order_wide_chunk" "${FACT_TARGET_ROWS}" "${FACT_DAY_COUNT}" "${FACT_CHUNK_ROWS}" "${actual_load_mode}"
