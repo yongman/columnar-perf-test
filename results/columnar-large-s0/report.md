@@ -19,9 +19,9 @@
 ## Data Preparation
 - Large data load elapsed: `1135.647` seconds
 - `prepare-s0` elapsed: `53.188` seconds
-- Benchmark wall time from [meta.txt](/workspace/columnar-perf-test/results/columnar-large-s0/meta.txt): `309` seconds (`2026-04-27T09:17:15Z` -> `2026-04-27T09:22:24Z`)
-- Load log: [load_large_dataset.log](/workspace/columnar-perf-test/results/execution_logs/2026-04-27-columnar-large-s0/load_large_dataset.log)
-- Prepare log: [prepare_s0.log](/workspace/columnar-perf-test/results/execution_logs/2026-04-27-columnar-large-s0/prepare_s0.log)
+- Benchmark wall time from [meta.txt](meta.txt): `309` seconds (`2026-04-27T09:17:15Z` -> `2026-04-27T09:22:24Z`)
+- Load log: [load_large_dataset.log](../execution_logs/2026-04-27-columnar-large-s0/load_large_dataset.log)
+- Prepare log: [prepare_s0.log](../execution_logs/2026-04-27-columnar-large-s0/prepare_s0.log)
 
 ## Data Validation
 - `fact_order_wide`: `20000000` rows, range `2026-03-01 00:00:00` to `2026-03-10 23:59:59`, hot-window rows `4000000`, merchants `200`, ads `5000`
@@ -51,10 +51,10 @@
 
 
 ## Artifacts
-- Large-case report: [report.md](/workspace/columnar-perf-test/results/columnar-large-s0/report.md)
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/columnar-large-s0/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/columnar-large-s0/hashes.tsv)
-- Query result sets: [result_sets](/workspace/columnar-perf-test/results/columnar-large-s0/result_sets)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/columnar-large-s0/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/columnar-large-s0/table_stats.tsv)
-- Execution logs: [execution_logs](/workspace/columnar-perf-test/results/execution_logs/2026-04-27-columnar-large-s0)
+- Large-case report: [report.md](report.md)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- Query result sets: [result_sets](result_sets)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)
+- Execution logs: [execution_logs](../execution_logs/2026-04-27-columnar-large-s0)

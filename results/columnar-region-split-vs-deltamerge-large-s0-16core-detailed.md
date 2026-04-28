@@ -1,9 +1,9 @@
 # Columnar Region-Split vs DeltaMerge Large S0 16-Core Detailed Comparison
 
 ## Scope
-- Columnar reference after manual region split: [columnar-large-s0-region-split](/workspace/columnar-perf-test/results/columnar-large-s0-region-split)
-- New DeltaMerge reference with CPU capped at `16` cores: [deltamerge-large-s0-16core](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core)
-- Previous DeltaMerge comparison baseline: [columnar-region-split-vs-deltamerge-large-s0-detailed.md](/workspace/columnar-perf-test/results/columnar-region-split-vs-deltamerge-large-s0-detailed.md)
+- Columnar reference after manual region split: [columnar-large-s0-region-split](columnar-large-s0-region-split)
+- New DeltaMerge reference with CPU capped at `16` cores: [deltamerge-large-s0-16core](deltamerge-large-s0-16core)
+- Previous DeltaMerge comparison baseline: [columnar-region-split-vs-deltamerge-large-s0-detailed.md](columnar-region-split-vs-deltamerge-large-s0-detailed.md)
 - Shared dataset: `bench_columnar_perf_large` with `fact_order_wide=20,000,000` and `user_game_day=10,000,006`
 - Correctness: `12/12 hashes matched`
 - Logical plan drift vs DeltaMerge: `none; all 12 logical plan skeletons are identical`
@@ -84,8 +84,8 @@
 - The evidence still points to physical execution differences under the same logical plan: lower DeltaMerge scan time, better skipping, and higher stable scan-side parallelism.
 
 ## Artifacts
-- Columnar report: [columnar-large-s0-region-split/report.md](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/report.md)
-- DeltaMerge 16-core report: [deltamerge-large-s0-16core/report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/report.md)
-- Summary compare: [columnar-region-split-vs-deltamerge-large-s0-16core.md](/workspace/columnar-perf-test/results/columnar-region-split-vs-deltamerge-large-s0-16core.md)
-- DeltaMerge cap-only compare: [deltamerge-before-vs-16core-large-s0.md](/workspace/columnar-perf-test/results/deltamerge-before-vs-16core-large-s0.md)
-- Detailed compare report: [columnar-region-split-vs-deltamerge-large-s0-16core-detailed.md](/workspace/columnar-perf-test/results/columnar-region-split-vs-deltamerge-large-s0-16core-detailed.md)
+- Columnar report: [columnar-large-s0-region-split/report.md](columnar-large-s0-region-split/report.md)
+- DeltaMerge 16-core report: [deltamerge-large-s0-16core/report.md](deltamerge-large-s0-16core/report.md)
+- Summary compare: [columnar-region-split-vs-deltamerge-large-s0-16core.md](columnar-region-split-vs-deltamerge-large-s0-16core.md)
+- DeltaMerge cap-only compare: [deltamerge-before-vs-16core-large-s0.md](deltamerge-before-vs-16core-large-s0.md)
+- Detailed compare report: [columnar-region-split-vs-deltamerge-large-s0-16core-detailed.md](columnar-region-split-vs-deltamerge-large-s0-16core-detailed.md)

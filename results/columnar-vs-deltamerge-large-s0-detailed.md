@@ -1,8 +1,8 @@
 # Columnar vs DeltaMerge Large S0 Detailed Comparison
 
 ## Scope
-- Columnar run: [columnar-large-s0](/workspace/columnar-perf-test/results/columnar-large-s0)
-- DeltaMerge run: [deltamerge-large-s0](/workspace/columnar-perf-test/results/deltamerge-large-s0)
+- Columnar run: [columnar-large-s0](columnar-large-s0)
+- DeltaMerge run: [deltamerge-large-s0](deltamerge-large-s0)
 - Schema for both runs: `bench_columnar_perf_large`
 - Data remained unchanged between runs: `fact_order_wide=20,000,000`, `user_game_day=10,000,006`
 - Correctness: `12/12 hashes matched`
@@ -47,8 +47,8 @@
 - Because both paths still run through `mpp[tiflash]`, this comparison does not show “TiFlash vs non-TiFlash”. It shows two different physical execution modes underneath the same high-level MPP plan shape.
 
 ## Key Artifacts
-- Summary comparison: [columnar-vs-deltamerge-large-s0.md](/workspace/columnar-perf-test/results/columnar-vs-deltamerge-large-s0.md)
-- Detailed Delta report: [deltamerge-large-s0/report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0/report.md)
-- Columnar report: [columnar-large-s0/report.md](/workspace/columnar-perf-test/results/columnar-large-s0/report.md)
-- Columnar explain files: [columnar-large-s0/explain](/workspace/columnar-perf-test/results/columnar-large-s0/explain)
-- DeltaMerge explain files: [deltamerge-large-s0/explain](/workspace/columnar-perf-test/results/deltamerge-large-s0/explain)
+- Summary comparison: [columnar-vs-deltamerge-large-s0.md](columnar-vs-deltamerge-large-s0.md)
+- Detailed Delta report: [deltamerge-large-s0/report.md](deltamerge-large-s0/report.md)
+- Columnar report: [columnar-large-s0/report.md](columnar-large-s0/report.md)
+- Columnar explain files: [columnar-large-s0/explain](columnar-large-s0/explain)
+- DeltaMerge explain files: [deltamerge-large-s0/explain](deltamerge-large-s0/explain)

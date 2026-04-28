@@ -1,9 +1,9 @@
 # Columnar Region-Split vs DeltaMerge Large S0 Detailed Comparison
 
 ## Scope
-- New columnar run after manual region split: [columnar-large-s0-region-split](/workspace/columnar-perf-test/results/columnar-large-s0-region-split)
-- Previous columnar reference: [columnar-large-s0](/workspace/columnar-perf-test/results/columnar-large-s0)
-- DeltaMerge reference: [deltamerge-large-s0](/workspace/columnar-perf-test/results/deltamerge-large-s0)
+- New columnar run after manual region split: [columnar-large-s0-region-split](columnar-large-s0-region-split)
+- Previous columnar reference: [columnar-large-s0](columnar-large-s0)
+- DeltaMerge reference: [deltamerge-large-s0](deltamerge-large-s0)
 - Shared dataset: `bench_columnar_perf_large` with `fact_order_wide=20,000,000` and `user_game_day=10,000,006`
 - Special note: `08_or_lookup` was retried again on 2026-04-28 and the refreshed timings/explain were substituted into this comparison
 - Correctness: `12/12 hashes matched`
@@ -69,7 +69,7 @@
 - The remaining hardest case for columnar is still `08_or_lookup` and, to a lesser degree, the wide late-materialization query `12`.
 
 ## Artifacts
-- New columnar report: [columnar-large-s0-region-split/report.md](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/report.md)
-- Summary compare: [columnar-region-split-vs-deltamerge-large-s0.md](/workspace/columnar-perf-test/results/columnar-region-split-vs-deltamerge-large-s0.md)
-- Before/after split summary: [columnar-before-vs-after-region-split-large-s0.md](/workspace/columnar-perf-test/results/columnar-before-vs-after-region-split-large-s0.md)
-- Detailed compare report: [columnar-region-split-vs-deltamerge-large-s0-detailed.md](/workspace/columnar-perf-test/results/columnar-region-split-vs-deltamerge-large-s0-detailed.md)
+- New columnar report: [columnar-large-s0-region-split/report.md](columnar-large-s0-region-split/report.md)
+- Summary compare: [columnar-region-split-vs-deltamerge-large-s0.md](columnar-region-split-vs-deltamerge-large-s0.md)
+- Before/after split summary: [columnar-before-vs-after-region-split-large-s0.md](columnar-before-vs-after-region-split-large-s0.md)
+- Detailed compare report: [columnar-region-split-vs-deltamerge-large-s0-detailed.md](columnar-region-split-vs-deltamerge-large-s0-detailed.md)

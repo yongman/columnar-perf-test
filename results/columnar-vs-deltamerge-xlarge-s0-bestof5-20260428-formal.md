@@ -1,8 +1,8 @@
 # Columnar vs DeltaMerge XLarge S0 Best-of-5 Formal Comparison Report
 
 ## Scope
-- Columnar run: [columnar-xlarge-s0-bestof5-20260428](/workspace/columnar-perf-test/results/columnar-xlarge-s0-bestof5-20260428)
-- DeltaMerge run: [deltamerge-xlarge-s0-bestof5-20260428](/workspace/columnar-perf-test/results/deltamerge-xlarge-s0-bestof5-20260428)
+- Columnar run: [columnar-xlarge-s0-bestof5-20260428](columnar-xlarge-s0-bestof5-20260428)
+- DeltaMerge run: [deltamerge-xlarge-s0-bestof5-20260428](deltamerge-xlarge-s0-bestof5-20260428)
 - Environment: `127.0.0.1:4000`, user `root`, TiDB version `8.0.11-TiDB-v8.5.3-serverless`
 - Shared benchmark schema: `bench_columnar_perf_xlarge`
 - Shared dataset size: `fact_order_wide=200,000,000`, `user_game_day=100,000,006`
@@ -68,6 +68,6 @@
 - The remaining differences are still best explained by physical execution behavior under the same logical plans: leaf-scan cost, sparse-read efficiency, and scan-side concurrency.
 
 ## Artifacts
-- Columnar report: [columnar-xlarge-s0-bestof5-20260428/report.md](/workspace/columnar-perf-test/results/columnar-xlarge-s0-bestof5-20260428/report.md)
-- DeltaMerge report: [deltamerge-xlarge-s0-bestof5-20260428/report.md](/workspace/columnar-perf-test/results/deltamerge-xlarge-s0-bestof5-20260428/report.md)
-- Formal comparison report: [columnar-vs-deltamerge-xlarge-s0-bestof5-20260428-formal.md](/workspace/columnar-perf-test/results/columnar-vs-deltamerge-xlarge-s0-bestof5-20260428-formal.md)
+- Columnar report: [columnar-xlarge-s0-bestof5-20260428/report.md](columnar-xlarge-s0-bestof5-20260428/report.md)
+- DeltaMerge report: [deltamerge-xlarge-s0-bestof5-20260428/report.md](deltamerge-xlarge-s0-bestof5-20260428/report.md)
+- Formal comparison report: [columnar-vs-deltamerge-xlarge-s0-bestof5-20260428-formal.md](columnar-vs-deltamerge-xlarge-s0-bestof5-20260428-formal.md)

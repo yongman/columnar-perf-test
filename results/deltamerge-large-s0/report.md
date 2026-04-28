@@ -38,9 +38,9 @@
 
 
 ## Artifacts
-- Report: [report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0/report.md)
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/deltamerge-large-s0/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/deltamerge-large-s0/hashes.tsv)
-- Query result sets: [result_sets](/workspace/columnar-perf-test/results/deltamerge-large-s0/result_sets)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/deltamerge-large-s0/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/deltamerge-large-s0/table_stats.tsv)
+- Report: [report.md](report.md)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- Query result sets: [result_sets](result_sets)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)

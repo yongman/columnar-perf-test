@@ -44,10 +44,10 @@
 | `12_late_materialization_wide_topn` | 0.514 | 0.533 | 0.494 | 0.533 | 200 | `de3fa58537c2` |
 
 ## Artifacts
-- Report: [report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/report.md)
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/hashes.tsv)
-- Query result sets: [result_sets](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/result_sets)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/table_stats.tsv)
+- Report: [report.md](report.md)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- Query result sets: [result_sets](result_sets)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)
 

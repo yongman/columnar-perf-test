@@ -1,9 +1,9 @@
 # Columnar vs DeltaMerge Large S0 Second-Hit Detailed Comparison
 
 ## Scope
-- New columnar rerun: [columnar-large-s0-secondhit](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit)
-- DeltaMerge reference run: [deltamerge-large-s0](/workspace/columnar-perf-test/results/deltamerge-large-s0)
-- Previous comparison baseline: [columnar-vs-deltamerge-large-s0-detailed.md](/workspace/columnar-perf-test/results/columnar-vs-deltamerge-large-s0-detailed.md)
+- New columnar rerun: [columnar-large-s0-secondhit](columnar-large-s0-secondhit)
+- DeltaMerge reference run: [deltamerge-large-s0](deltamerge-large-s0)
+- Previous comparison baseline: [columnar-vs-deltamerge-large-s0-detailed.md](columnar-vs-deltamerge-large-s0-detailed.md)
 - Data set for both paths: `bench_columnar_perf_large` with `fact_order_wide=20,000,000` and `user_game_day=10,000,006`
 - Comparison methodology: both sides are normalized to `iteration=2` only
 - Correctness: `12/12 hashes matched`
@@ -73,6 +73,6 @@
 - Cache miss may affect a small subset of queries at the margin, but it does not explain the observed multi-x gap between the two paths.
 
 ## Artifacts
-- New columnar rerun report: [columnar-large-s0-secondhit/report.md](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit/report.md)
-- Previous detailed comparison: [columnar-vs-deltamerge-large-s0-detailed.md](/workspace/columnar-perf-test/results/columnar-vs-deltamerge-large-s0-detailed.md)
-- New detailed comparison: [columnar-vs-deltamerge-large-s0-secondhit-detailed.md](/workspace/columnar-perf-test/results/columnar-vs-deltamerge-large-s0-secondhit-detailed.md)
+- New columnar rerun report: [columnar-large-s0-secondhit/report.md](columnar-large-s0-secondhit/report.md)
+- Previous detailed comparison: [columnar-vs-deltamerge-large-s0-detailed.md](columnar-vs-deltamerge-large-s0-detailed.md)
+- New detailed comparison: [columnar-vs-deltamerge-large-s0-secondhit-detailed.md](columnar-vs-deltamerge-large-s0-secondhit-detailed.md)

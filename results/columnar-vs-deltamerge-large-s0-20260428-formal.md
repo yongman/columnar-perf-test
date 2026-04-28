@@ -1,8 +1,8 @@
 # Columnar vs DeltaMerge Large S0 Formal Comparison Report
 
 ## Scope
-- Columnar run: [columnar-large-s0-20260428](/workspace/columnar-perf-test/results/columnar-large-s0-20260428)
-- DeltaMerge run: [deltamerge-large-s0-16core](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core)
+- Columnar run: [columnar-large-s0-20260428](columnar-large-s0-20260428)
+- DeltaMerge run: [deltamerge-large-s0-16core](deltamerge-large-s0-16core)
 - Environment: `127.0.0.1:4000`, user `root`, TiDB version `8.0.11-TiDB-v8.5.3-serverless`
 - Shared benchmark schema: `bench_columnar_perf_large`
 - Shared dataset size: `fact_order_wide=20,000,000`, `user_game_day=10,000,006`
@@ -67,7 +67,7 @@
 - The dominant source of the gap is physical execution behavior: lower DeltaMerge leaf scan time, stronger skipping effectiveness on selective workloads, and higher stable scan-side concurrency on most queries.
 
 ## Artifacts
-- Columnar report: [columnar-large-s0-20260428/report.md](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/report.md)
-- DeltaMerge report: [deltamerge-large-s0-16core/report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0-16core/report.md)
-- Summary comparison: [columnar-large-s0-20260428-vs-deltamerge-large-s0-16core.md](/workspace/columnar-perf-test/results/columnar-large-s0-20260428-vs-deltamerge-large-s0-16core.md)
-- Formal comparison report: [columnar-vs-deltamerge-large-s0-20260428-formal.md](/workspace/columnar-perf-test/results/columnar-vs-deltamerge-large-s0-20260428-formal.md)
+- Columnar report: [columnar-large-s0-20260428/report.md](columnar-large-s0-20260428/report.md)
+- DeltaMerge report: [deltamerge-large-s0-16core/report.md](deltamerge-large-s0-16core/report.md)
+- Summary comparison: [columnar-large-s0-20260428-vs-deltamerge-large-s0-16core.md](columnar-large-s0-20260428-vs-deltamerge-large-s0-16core.md)
+- Formal comparison report: [columnar-vs-deltamerge-large-s0-20260428-formal.md](columnar-vs-deltamerge-large-s0-20260428-formal.md)

@@ -6,7 +6,7 @@
 - Query path: columnar
 - Benchmark schema: `bench_columnar_perf_large`
 - Methodology: each query was measured twice with `WARMUP=0`, `REPEAT=2`; only `iteration=2` is used as the reported value
-- Reference old columnar report: [columnar-large-s0/report.md](/workspace/columnar-perf-test/results/columnar-large-s0/report.md)
+- Reference old columnar report: [columnar-large-s0/report.md](../columnar-large-s0/report.md)
 
 ## Validation
 - `fact_order_wide`: `20000000` rows, range `2026-03-01 00:00:00` to `2026-03-10 23:59:59`, hot-window rows `4000000`
@@ -43,8 +43,8 @@
 
 
 ## Artifacts
-- Report: [report.md](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit/report.md)
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit/hashes.tsv)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-secondhit/table_stats.tsv)
+- Report: [report.md](report.md)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)

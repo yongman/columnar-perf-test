@@ -9,13 +9,13 @@
 - TiFlash path verification: `12/12` `EXPLAIN ANALYZE` outputs contain `mpp[tiflash]`
 
 ## Environment Notes
-- The host does not provide a native `mysql` client or `/usr/bin/time`. Repo-local wrappers [bin/mysql](/workspace/columnar-perf-test/bin/mysql) and [bin/time](/workspace/columnar-perf-test/bin/time) were added so the existing benchmark scripts could run unchanged.
-- This TiDB environment rejects `CREATE PROCEDURE`, so the 1B chunk-loader path in [sql/10_create_chunk_load_procedures.sql](/workspace/columnar-perf-test/sql/10_create_chunk_load_procedures.sql) was not used for execution. The actual data import used the small bootstrap path.
-- The current TiDB parser does not accept the original `TIMESTAMP(...) + INTERVAL ... SECOND` expressions used by the data generator. Equivalent `DATE_ADD(...)` expressions were applied in [sql/03_load_fact_order_wide_base.sql](/workspace/columnar-perf-test/sql/03_load_fact_order_wide_base.sql), [sql/06_prepare_s1_append.sql](/workspace/columnar-perf-test/sql/06_prepare_s1_append.sql), and [sql/10_create_chunk_load_procedures.sql](/workspace/columnar-perf-test/sql/10_create_chunk_load_procedures.sql).
+- The host does not provide a native `mysql` client or `/usr/bin/time`. Repo-local wrappers [bin/mysql](../../bin/mysql) and [bin/time](../../bin/time) were added so the existing benchmark scripts could run unchanged.
+- This TiDB environment rejects `CREATE PROCEDURE`, so the 1B chunk-loader path in [sql/10_create_chunk_load_procedures.sql](../../sql/10_create_chunk_load_procedures.sql) was not used for execution. The actual data import used the small bootstrap path.
+- The current TiDB parser does not accept the original `TIMESTAMP(...) + INTERVAL ... SECOND` expressions used by the data generator. Equivalent `DATE_ADD(...)` expressions were applied in [sql/03_load_fact_order_wide_base.sql](../../sql/03_load_fact_order_wide_base.sql), [sql/06_prepare_s1_append.sql](../../sql/06_prepare_s1_append.sql), and [sql/10_create_chunk_load_procedures.sql](../../sql/10_create_chunk_load_procedures.sql).
 
 ## Data Preparation
 - Bootstrap executed in order: `00_create_database.sql` -> `01_create_tables.sql` -> `02_build_helper_sequences.sql` -> `03_load_fact_order_wide_base.sql` -> `04_load_user_game_day_base.sql`
-- `prepare-s0` completed successfully through [scripts/run_mysql_benchmark.sh](/workspace/columnar-perf-test/scripts/run_mysql_benchmark.sh)
+- `prepare-s0` completed successfully through [scripts/run_mysql_benchmark.sh](../../scripts/run_mysql_benchmark.sh)
 - Load timing logs:
 | Step | Elapsed Seconds |
 |---|---:|
@@ -31,7 +31,7 @@
 - `user_game_day`: `2000006` rows, range `2026-03-01` to `2026-03-10`, hot-window rows `400000`, merchants `200`, games `100`
 
 ## Benchmark Summary
-- Benchmark wall time from [meta.txt](/workspace/columnar-perf-test/results/columnar-s0/meta.txt): `138` seconds (`2026-04-27T08:37:07Z` -> `2026-04-27T08:39:25Z`)
+- Benchmark wall time from [meta.txt](meta.txt): `138` seconds (`2026-04-27T08:37:07Z` -> `2026-04-27T08:39:25Z`)
 - Fastest median query: `06_hot_window_agg` at `0.414s`
 - Slowest median query: `12_late_materialization_wide_topn` at `6.623s`
 - Late materialization pair: `12_late_materialization_wide_topn` is `5.86x` slower than `11_late_materialization_narrow_topn` by median latency
@@ -54,9 +54,9 @@
 
 
 ## Artifacts
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/columnar-s0/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/columnar-s0/hashes.tsv)
-- Query result sets: [result_sets](/workspace/columnar-perf-test/results/columnar-s0/result_sets)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/columnar-s0/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/columnar-s0/table_stats.tsv)
-- Data-load timing logs: [execution_logs](/workspace/columnar-perf-test/results/execution_logs/2026-04-27-columnar-s0)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- Query result sets: [result_sets](result_sets)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)
+- Data-load timing logs: [execution_logs](../execution_logs/2026-04-27-columnar-s0)

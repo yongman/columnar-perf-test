@@ -7,7 +7,7 @@
 - Benchmark schema: `bench_columnar_perf_large`
 - Change relative to the earlier columnar run: regions were manually split to increase query-side concurrency and CPU utilization
 - Special note: `08_or_lookup` was retried again on 2026-04-28 and the refreshed timings/explain were substituted into this report because the previous latency looked abnormal
-- Reference reports: [columnar-large-s0/report.md](/workspace/columnar-perf-test/results/columnar-large-s0/report.md), [deltamerge-large-s0/report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0/report.md)
+- Reference reports: [columnar-large-s0/report.md](../columnar-large-s0/report.md), [deltamerge-large-s0/report.md](../deltamerge-large-s0/report.md)
 - Runner config: `WARMUP=1`, `REPEAT=5`
 
 ## Validation
@@ -46,8 +46,8 @@
 
 
 ## Artifacts
-- Report: [report.md](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/report.md)
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/hashes.tsv)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-region-split/table_stats.tsv)
+- Report: [report.md](report.md)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)

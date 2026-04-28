@@ -42,10 +42,10 @@
 | `12_late_materialization_wide_topn` | 2.600 | 2.860 | 2.196 | 2.860 | 200 | `de3fa58537c2` |
 
 ## Artifacts
-- Report: [report.md](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/report.md)
-- Timings: [timings.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/timings.tsv)
-- Result hashes: [hashes.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/hashes.tsv)
-- Query result sets: [result_sets](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/result_sets)
-- EXPLAIN ANALYZE outputs: [explain](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/explain)
-- Table stats: [table_stats.tsv](/workspace/columnar-perf-test/results/columnar-large-s0-20260428/table_stats.tsv)
+- Report: [report.md](report.md)
+- Timings: [timings.tsv](timings.tsv)
+- Result hashes: [hashes.tsv](hashes.tsv)
+- Query result sets: [result_sets](result_sets)
+- EXPLAIN ANALYZE outputs: [explain](explain)
+- Table stats: [table_stats.tsv](table_stats.tsv)
 
