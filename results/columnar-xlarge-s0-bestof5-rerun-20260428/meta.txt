@@ -1,4 +1,4 @@
-label=columnar-xlarge-s0-bestof5-20260428
+label=columnar-xlarge-s0-bestof5-rerun-20260428
 mysql_host=127.0.0.1
 mysql_port=4000
 mysql_user=root
