@@ -7,3 +7,5 @@ warmup=0
 repeat=5
 started_at=2026-04-28T08:02:27Z
 finished_at=2026-04-28T08:04:51Z
+refresh_08_or_lookup_at=2026-04-28T08:18:47Z
+refresh_08_or_lookup_method=spot_rerun_replace_in_place

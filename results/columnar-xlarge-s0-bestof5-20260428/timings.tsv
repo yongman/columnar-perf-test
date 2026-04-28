@@ -34,11 +34,11 @@ columnar-xlarge-s0-bestof5-20260428	07_hot_window_topn	2	0.998
 columnar-xlarge-s0-bestof5-20260428	07_hot_window_topn	3	1.356
 columnar-xlarge-s0-bestof5-20260428	07_hot_window_topn	4	1.284
 columnar-xlarge-s0-bestof5-20260428	07_hot_window_topn	5	1.310
-columnar-xlarge-s0-bestof5-20260428	08_or_lookup	1	1.921
-columnar-xlarge-s0-bestof5-20260428	08_or_lookup	2	1.774
-columnar-xlarge-s0-bestof5-20260428	08_or_lookup	3	1.560
-columnar-xlarge-s0-bestof5-20260428	08_or_lookup	4	1.527
-columnar-xlarge-s0-bestof5-20260428	08_or_lookup	5	1.590
+columnar-xlarge-s0-bestof5-20260428	08_or_lookup	1	0.976
+columnar-xlarge-s0-bestof5-20260428	08_or_lookup	2	0.971
+columnar-xlarge-s0-bestof5-20260428	08_or_lookup	3	0.963
+columnar-xlarge-s0-bestof5-20260428	08_or_lookup	4	0.972
+columnar-xlarge-s0-bestof5-20260428	08_or_lookup	5	0.967
 columnar-xlarge-s0-bestof5-20260428	09_pushdown_filter_base	1	1.558
 columnar-xlarge-s0-bestof5-20260428	09_pushdown_filter_base	2	1.699
 columnar-xlarge-s0-bestof5-20260428	09_pushdown_filter_base	3	1.654
