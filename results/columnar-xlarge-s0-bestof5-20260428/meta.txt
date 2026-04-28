@@ -1,0 +1,9 @@
+label=columnar-xlarge-s0-bestof5-20260428
+mysql_host=127.0.0.1
+mysql_port=4000
+mysql_user=root
+bench_db=bench_columnar_perf_xlarge
+warmup=0
+repeat=5
+started_at=2026-04-28T06:00:03Z
+finished_at=2026-04-28T06:04:05Z
