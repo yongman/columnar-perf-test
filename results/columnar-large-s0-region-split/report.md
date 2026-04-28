@@ -6,6 +6,7 @@
 - Query path: columnar
 - Benchmark schema: `bench_columnar_perf_large`
 - Change relative to the earlier columnar run: regions were manually split to increase query-side concurrency and CPU utilization
+- Special note: `08_or_lookup` was retried again on 2026-04-28 and the refreshed timings/explain were substituted into this report because the previous latency looked abnormal
 - Reference reports: [columnar-large-s0/report.md](/workspace/columnar-perf-test/results/columnar-large-s0/report.md), [deltamerge-large-s0/report.md](/workspace/columnar-perf-test/results/deltamerge-large-s0/report.md)
 - Runner config: `WARMUP=1`, `REPEAT=5`
 
@@ -18,15 +19,15 @@
 ## Summary
 - Benchmark wall time: `69s`, improved from `309s` in the earlier columnar run, but still above DeltaMerge at `28s`
 - Fastest median query: `06_hot_window_agg` at `0.230s`
-- Slowest median query: `08_or_lookup` at `2.407s`
+- Slowest median query: `08_or_lookup` at `2.390s`
 - Biggest gain vs old columnar: `12_late_materialization_wide_topn` at `7.38x`
-- Weakest gain vs old columnar: `08_or_lookup` at `1.00x`
+- Weakest gain vs old columnar: `08_or_lookup` at `1.01x`
 - Closest remaining gap to DeltaMerge: `06_hot_window_agg` at `1.06x`
-- Largest remaining gap to DeltaMerge: `08_or_lookup` at `10.65x`
+- Largest remaining gap to DeltaMerge: `08_or_lookup` at `10.58x`
 
 ## Key Observation
 - Region split materially improved most scan-heavy and materialization-heavy queries. The end-to-end columnar wall time dropped by `4.48x`.
-- The improvement is not uniform. `08_or_lookup` is essentially unchanged, which suggests that sparse point/range lookup is still dominated by access pattern cost rather than by region-level parallelism.
+- The improvement is not uniform. `08_or_lookup` improved only slightly after the retry, from `2.419s` to `2.390s`, which still suggests that sparse point/range lookup is dominated by access pattern cost rather than by region-level parallelism.
 
 | Query | Median (s) | P95 (s) | Old Columnar Median (s) | Old/New | Delta Median (s) | New/Delta |
 |---|---:|---:|---:|---:|---:|---:|
@@ -37,7 +38,7 @@
 | `05_row_number_paging` | 0.346 | 0.443 | 1.351 | 3.90x | 0.277 | 1.25x |
 | `06_hot_window_agg` | 0.230 | 0.243 | 0.859 | 3.73x | 0.218 | 1.06x |
 | `07_hot_window_topn` | 0.553 | 0.595 | 2.691 | 4.87x | 0.336 | 1.65x |
-| `08_or_lookup` | 2.407 | 2.429 | 2.419 | 1.00x | 0.226 | 10.65x |
+| `08_or_lookup` | 2.390 | 2.399 | 2.419 | 1.01x | 0.226 | 10.58x |
 | `09_pushdown_filter_base` | 0.445 | 0.452 | 3.009 | 6.76x | 0.207 | 2.15x |
 | `10_pushdown_filter_derived` | 0.464 | 0.493 | 3.107 | 6.70x | 0.222 | 2.09x |
 | `11_late_materialization_narrow_topn` | 0.387 | 0.393 | 2.332 | 6.03x | 0.211 | 1.83x |
